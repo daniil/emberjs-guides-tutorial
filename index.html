@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <script type="text/x-handlebars">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">Bloggr</a>
+        <ul class="nav">
+          <li>{{#linkTo 'posts'}}Posts{{/linkTo}}</li>
+          <li>{{#linkTo 'about'}}About{{/linkTo}}</li>
+        </ul>
+      </div>
+    </div>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="posts">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span3">
+        <table class="table">
+          <thead>
+            <tr><th>Recent Posts</th></tr>
+          </thead>
+          {{#each model}}
+          <tr><td>
+            {{#linkTo 'post' this}}{{title}} <small class="muted">by {{author}}</small>{{/linkTo}}
+          </td></tr>
+          {{/each}}
+        </table>
+      </div>
+      <div class="span9">
+        {{outlet}}
+      </div>
+    </div>
+  </div>
+  </script>
+  
+  <script type="text/x-handlebars" id="posts/index">
+    <p class="text-warning">Please select a post</p>
+  </script> 
+
+  <script type="text/x-handlebars" id="post">
+    {{#if isEditing}}
+      {{partial 'post/edit'}}
+      <button {{action 'doneEditing'}}>Done</button>
+    {{else}}
+      <button {{action 'edit'}}>Edit</button>
+    {{/if}}
+    <h1>{{title}}</h1>
+    <h2> by {{author}} <small class="muted">({{date publishedAt}})</small></h2>
+
+    <hr>
+
+    <div class="intro">
+      {{markdown intro}}
+    </div>
+
+    <div class="below-the-fold">
+      {{markdown extended}}
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="post/_edit">
+    <p>{{view Ember.TextField valueBinding="title"}}</p>
+    <p>{{view Ember.TextArea valueBinding="intro"}}</p>
+    <p>{{view Ember.TextArea valueBinding="extended"}}</p>
+  </script>
+
+  <script type="text/x-handlebars" id="about">
+    <div class="about">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec velit leo, ut hendrerit est. Mauris sed enim in quam ullamcorper bibendum. Suspendisse potenti. Fusce commodo est ac lectus ultrices facilisis. Suspendisse imperdiet est sit amet risus lacinia feugiat lobortis sem semper. Proin pulvinar ornare lorem et tempus. Donec sapien elit, posuere at mollis sed, fermentum et nisl. Nulla convallis laoreet iaculis. Cras eu libero mauris.</p>
+
+      <p>Praesent sit amet neque enim. Mauris nisi risus, iaculis ut accumsan non, laoreet non magna. Fusce adipiscing dapibus pharetra. Donec nec elit ut libero ullamcorper porta ut nec felis. Nullam a sem nibh. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse potenti. Maecenas eget urna a eros iaculis laoreet. Fusce ultrices arcu ut leo bibendum a elementum orci tincidunt. Sed placerat diam sit amet quam mollis posuere. Vivamus in magna nibh, ut eleifend lacus.</p>
+
+      <p>Praesent dignissim aliquam elit sit amet mattis. Fusce sit amet dolor neque. Pellentesque eget consequat enim. Sed pulvinar sapien ac erat facilisis pharetra. Donec ut mauris lorem, non pretium justo. Aenean sed risus ultrices arcu semper luctus eget at sapien. Donec a arcu tellus, in facilisis enim. Quisque nec turpis felis, ut mollis neque. Mauris tristique ante a est sagittis malesuada. Ut semper, diam in vehicula consectetur, nulla turpis malesuada justo, sit amet cursus erat arcu aliquam elit. Proin vitae lorem in mauris fermentum auctor. Duis vehicula lorem vitae urna rutrum ut aliquet quam lobortis. Proin sollicitudin, tortor non lacinia aliquam, massa lorem interdum tellus, ac congue ligula quam in elit. Nam tempor mattis nulla ac lobortis. Nam auctor orci sed ipsum bibendum lacinia auctor purus condimentum. Praesent ut egestas metus.</p>
+  </script>
+
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
+  <script src="js/libs/ember-1.0.0-rc.2.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/showdown.js"></script>
+  <script src="js/libs/moment.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
